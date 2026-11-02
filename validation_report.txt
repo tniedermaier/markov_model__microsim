@@ -1,0 +1,70 @@
+
+============================================================
+BASELINE TECHNICAL VALIDATION
+============================================================
+Patients per subcohort: 100000 
+Seed smokers: 12345 
+Seed former smokers: 12346 
+
+1. Deterministic benchmark reference check
+                    result reported_benchmark current_markov          difference
+   direct_costs_usual_care        11500.78000 11500.78408571  0.0040857134426915
+ direct_costs_intervention        11711.26000 11711.26159209  0.0015920914956951
+          qalys_usual_care           12.68995    12.68995112  0.0000011237409332
+        qalys_intervention           13.23588    13.23587956 -0.0000004444505866
+               direct_icer          385.54050   385.54047402 -0.0000259843673120
+
+2. Cycle-specific state-distribution agreement
+          group max_tvd_percent mean_tvd_percent row_of_max_tvd transition_of_max_tvd
+        smokers        0.414415         0.124325             47                    46
+ former_smokers        0.322538         0.134337            128                   127
+
+3. Discounted endpoint agreement by subcohort
+          group                    metric         markov microsimulation      difference relative_difference_percent
+        smokers   discounted_direct_costs 1164532502.082  1168258805.754 3726303.6719437               0.31998279698
+        smokers discounted_indirect_costs  949410662.279   955390054.568 5979392.2892308               0.62980041480
+        smokers          discounted_qalys    1248522.796     1250353.842    1831.0457566               0.14665697432
+ former_smokers   discounted_direct_costs  923630943.568   925521317.003 1890373.4348950               0.20466761622
+ former_smokers discounted_indirect_costs  196146845.466   197625962.069 1479116.6027791               0.75408635773
+ former_smokers          discounted_qalys    1589728.066     1589488.340    -239.7258552              -0.01507967686
+
+4. Strategy-level results per patient
+           model     strategy direct_costs_per_patient indirect_costs_per_patient qalys_per_patient direct_icer societal_icer
+          Markov   usual_care            11500.7840857                9042.148333     12.6899511237          NA            NA
+          Markov intervention            11711.2615921                7836.926226     13.2358795555          NA            NA
+          Markov  incremental              210.4775064               -1205.222107      0.5459284318 385.5404740  -1822.115396
+ Microsimulation   usual_care            11536.9455643                9099.242090     12.7070191183          NA            NA
+ Microsimulation intervention            11744.4855823                7886.819542     13.2496343156          NA            NA
+ Microsimulation  incremental              207.5400180               -1212.422548      0.5426151972 382.4810272  -1851.924780
+
+Interpretation:
+- The Markov reference check should differ only through rounding.
+- Microsimulation endpoint differences should be small and may be
+  positive or negative because of first-order Monte Carlo error.
+- State totals are automatically checked in every row.
+
+5. Repeated-seed validation summary
+Number of repetitions: 100 
+                                metric      benchmark             mean standard_deviation           median percentile_2_5 percentile_97_5        minimum        maximum mean_signed_difference mean_absolute_difference n_above_benchmark
+               max_tvd_smokers_percent             NA   0.357587558604     0.086171967587   0.341199025481   0.2246506705    0.5480756657   0.2008689633   0.5701188207                     NA                       NA                NA
+                max_tvd_former_percent             NA   0.306073805539     0.085610693344   0.292546333540   0.1818640935    0.4672012725   0.1562740676   0.5900444328                     NA                       NA                NA
+ direct_costs_rel_diff_smokers_percent   0.0000000000  -0.026516727761     0.166125943612  -0.049785979634  -0.2717661442    0.3388886053  -0.5785254560   0.4552479939      -0.02651672776116           0.130939967999                39
+        qalys_rel_diff_smokers_percent   0.0000000000   0.005640913162     0.105535855152   0.010563152090  -0.1957492024    0.1906912549  -0.3113689420   0.2249885198       0.00564091316194           0.084924355081                54
+  direct_costs_rel_diff_former_percent   0.0000000000  -0.011369087482     0.132503633912  -0.023577596648  -0.2863519714    0.2726166611  -0.3483243298   0.3817960400      -0.01136908748204           0.102099965331                41
+         qalys_rel_diff_former_percent   0.0000000000   0.005044139373     0.101227448212   0.004209042473  -0.1652898984    0.2042049888  -0.2175401997   0.2954064658       0.00504413937336           0.081501709936                55
+              incremental_direct_costs 210.4775063781 210.803566383302     3.573858503814 210.910894243707 203.0158348304  217.0843242674 200.5350518301 220.5282815127       0.32606000524951           2.803007895732                55
+                     incremental_qalys   0.5459284318   0.545944047829     0.003373109163   0.545708456177   0.5397272285    0.5520303773   0.5382232319   0.5555272048       0.00001561602011           0.002732419817                47
+                           direct_icer 385.5404740156 386.127586890946     6.142643577203 386.816927516370 372.5326902607  395.9349653569 368.0176167747 401.4977185594       0.58711287531308           4.861504773966                58
+ n_below_benchmark
+                NA
+                NA
+                61
+                46
+                59
+                45
+                45
+                53
+                42
+
+Output directory:
+C:\Users\tobias.niedermaier\Documents\validation_output
