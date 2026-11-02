@@ -1,5 +1,5 @@
 # Corrected heemod implementation of the simplified COPD Markov model
-# Goal: reproduce Markov_model_simplified_neuer_Github.r as closely as possible.
+# Goal: reproduce Markov_model_simplified_Github_incl_checks.r as closely as possible.
 # Deterministic model plus corrected probabilistic sensitivity analysis (PSA).
 
 rm(list = ls(all = TRUE))
